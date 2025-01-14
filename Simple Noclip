@@ -1,0 +1,127 @@
+local guiplace = game.Players.LocalPlayer.PlayerGui
+local NoclipScreenGui = Instance.new("ScreenGui")
+NoclipScreenGui.Parent = guiplace
+NoclipScreenGui.Name = "Noclip"
+local FrameNoclip = Instance.new("Frame")
+FrameNoclip.Parent = guiplace.Noclip
+FrameNoclip.Size = UDim2.new(0,200,0,200)
+FrameNoclip.BackgroundColor3 = Color3.new(0.113725, 0.113725, 0.113725)
+local FrameNoclipUICorner = Instance.new("UICorner")
+FrameNoclipUICorner.Parent = FrameNoclip
+local FrameNoclipUIStroke = Instance.new("UIStroke")
+FrameNoclipUIStroke.Parent = FrameNoclip
+FrameNoclipUIStroke.Thickness = 2
+local FrameNoclipUIDragDetector = Instance.new("UIDragDetector")
+FrameNoclipUIDragDetector.Parent = FrameNoclip
+local ButtonNoclip = Instance.new("TextButton")
+ButtonNoclip.Parent = FrameNoclip
+ButtonNoclip.Size = UDim2.new(0,180,0,50)
+ButtonNoclip.Position = UDim2.new(0.05,0,0.05,0)
+ButtonNoclip.TextColor3 = Color3.new(1, 0, 0)
+ButtonNoclip.BackgroundColor3 = Color3.new(0.0705882, 0.0705882, 0.0705882)
+ButtonNoclip.Text = "Noclip"
+ButtonNoclip.Name = "ButtonNoclip"
+local ButtonNoclipUICorner = Instance.new("UICorner")
+FrameNoclipUICorner.Parent = ButtonNoclip
+ButtonNoclip.Activated:Connect(function()
+	if ButtonNoclip.TextColor3 == Color3.new(1, 0, 0) then
+		ButtonNoclip.TextColor3 = Color3.new(0, 1, 0)
+		ButtonNoclip.Active = false
+		local animInstance = Instance.new("Animation")
+		animInstance.AnimationId = "rbxassetid://87383393525678"
+		local anim = game.Players.LocalPlayer.Character.Humanoid.Animator:LoadAnimation(animInstance)
+		anim:play()
+		while ButtonNoclip.TextColor3 == Color3.new(0, 1, 0) do
+			for _, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+				if v:IsA("MeshPart") or v:IsA("Part") then
+					wait(0.05)
+					v.Transparency = 0.8
+					if v.CanCollide == true then
+						v.CanCollide = false
+						
+						print(v)
+					end
+					
+				end
+			end
+			wait(0.75)
+			ButtonNoclip.Active = true
+		end
+	elseif ButtonNoclip.TextColor3 == Color3.new(0, 1, 0) then
+		ButtonNoclip.TextColor3 = Color3.new(1, 0, 0)
+		ButtonNoclip.Active = false
+		local animInstance = Instance.new("Animation")
+		animInstance.AnimationId = "rbxassetid://87383393525678"
+		local anim = game.Players.LocalPlayer.Character.Humanoid.Animator:LoadAnimation(animInstance)
+		anim:play()
+		for _, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+			if v:IsA("MeshPart") or v:IsA("Part")then
+				v.CanCollide = true
+				wait(0.05)
+				v.CanCollide = true
+				v.Transparency = 0
+				if v.Name == "HumanoidRootPart" then
+					v.Transparency = 1
+				end
+				
+			end
+		end
+		wait(0.75)
+				ButtonNoclip.Active = true
+	end
+end)
+local buttonAntiVoid = Instance.new("TextButton")
+buttonAntiVoid.Parent = FrameNoclip
+buttonAntiVoid.Size = UDim2.new(0,180,0,50)
+buttonAntiVoid.Position = UDim2.new(0.05,0,0.37,0)
+buttonAntiVoid.TextColor3 = Color3.new(1, 0, 0)
+buttonAntiVoid.BackgroundColor3 = Color3.new(0.0705882, 0.0705882, 0.0705882)
+buttonAntiVoid.Text = "SetSpawn"
+buttonAntiVoid.Name = "buttonAntiVoid"
+local buttonResetSpawnCFrame = Instance.new("TextButton")
+buttonResetSpawnCFrame.Parent = FrameNoclip
+buttonResetSpawnCFrame.Size = UDim2.new(0,180,0,50)
+buttonResetSpawnCFrame.Position = UDim2.new(0.05,0,0.70,0)
+buttonResetSpawnCFrame.TextColor3 = Color3.new(1, 0, 0)
+buttonResetSpawnCFrame.BackgroundColor3 = Color3.new(0.0705882, 0.0705882, 0.0705882)
+buttonResetSpawnCFrame.Text = "ResetSpawnCFrame"
+buttonResetSpawnCFrame.Name = "buttonResetSpawnCFrame"
+	local SpwnStartPosition = Instance.new("Part")
+	SpwnStartPosition.Parent = workspace
+	SpwnStartPosition.Position = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+	SpwnStartPosition.Anchored = true
+	SpwnStartPosition.Transparency = 0.5
+	SpwnStartPosition.Name = "SpawnAntiVoidStartPos"
+	SpwnStartPosition.CanCollide = false
+	
+buttonResetSpawnCFrame.Activated:Connect(function()
+	game.Workspace.SpawnAntiVoid.CFrame = workspace.SpawnAntiVoidStartPos.CFrame
+end)
+local Spwn = Instance.new("Part")
+Spwn.Parent = workspace
+Spwn.Position = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+Spwn.Anchored = true
+Spwn.Transparency = 0.5
+Spwn.Name = "SpawnAntiVoid"
+Spwn.CanCollide = false
+buttonAntiVoid.Activated:Connect(function()
+	game.Workspace.SpawnAntiVoid.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+end)
+local antiVoidPart = Instance.new("Part")
+antiVoidPart.Parent = workspace
+antiVoidPart.Anchored = true
+antiVoidPart.Size = Vector3.new(2000, 1, 2000)
+antiVoidPart.Position = Vector3.new(0, -500, 0)
+antiVoidPart.Touched:Connect(function(hit)
+	if hit.Parent.Name == game.Players.LocalPlayer.Character.Name then
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace.SpawnAntiVoid.CFrame
+		print(hit.Parent)
+	end
+	
+end)
+local UICorner1 = Instance.new("UICorner")
+UICorner1.Parent = guiplace.Noclip.Frame.buttonAntiVoid
+local UICorner2 = Instance.new("UICorner")
+UICorner2.Parent = guiplace.Noclip.Frame.ButtonNoclip
+local UICorner3 = Instance.new("UICorner")
+UICorner3.Parent = guiplace.Noclip.Frame.buttonResetSpawnCFrame
