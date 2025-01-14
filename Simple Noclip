@@ -1,5 +1,5 @@
 local guiplace = game.Players.LocalPlayer.PlayerGui
-local NoclipScreenGui = Instance.new("ScreenGui")
+local NoclipScreenGui = Instance.new("CoreGui")
 NoclipScreenGui.Parent = guiplace
 NoclipScreenGui.Name = "Noclip"
 local FrameNoclip = Instance.new("Frame")
